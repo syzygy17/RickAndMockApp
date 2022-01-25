@@ -109,7 +109,7 @@ class CharactersFragment : Fragment() {
     }
 
     private fun startObserving() {
-        viewModel.viewState.observe(viewLifecycleOwner) {
+        viewModel.viewStateLiveData.observe(viewLifecycleOwner) {
             handleViewStateChanges(it)
         }
     }

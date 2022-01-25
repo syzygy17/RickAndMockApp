@@ -19,15 +19,15 @@ class CharactersViewModel @Inject constructor(
     private val charactersRepository: CharactersRepository
 ) : ViewModel() {
 
-    private val _viewState = MutableLiveData<ViewState<CharactersViewState>>()
+    private val _viewStateMutableLiveData = MutableLiveData<ViewState<CharactersViewState>>()
 
-    val viewState: LiveData<ViewState<CharactersViewState>> = _viewState
+    val viewStateLiveData: LiveData<ViewState<CharactersViewState>> = _viewStateMutableLiveData
 
     private var characterList: List<Character> by Delegates.notNull()
 
     fun onFilterListAction(state: FilterListAction) {
-        _viewState.value = ViewState.Loading
-        _viewState.postValue(
+        _viewStateMutableLiveData.value = ViewState.Loading
+        _viewStateMutableLiveData.postValue(
             ViewState.Data(
                 CharactersViewState.CharacterListSorted(
                     sortCharacterListByState(state)
@@ -43,7 +43,7 @@ class CharactersViewModel @Inject constructor(
     }
 
     init {
-        _viewState.value = ViewState.Loading
+        _viewStateMutableLiveData.value = ViewState.Loading
         viewModelScope.launch {
             getCharacters()
         }
@@ -58,9 +58,16 @@ class CharactersViewModel @Inject constructor(
 
     private fun onCharactersFetched(characters: Characters) {
         characterList = characters.characters
-        _viewState.postValue(ViewState.Data(CharactersViewState.CharactersFetched(characters)))
+        _viewStateMutableLiveData.postValue(
+            ViewState.Data(
+                CharactersViewState.CharactersFetched(
+                    characters
+                )
+            )
+        )
     }
 
-    private fun onError(throwable: Throwable) = _viewState.postValue(ViewState.Error(throwable))
+    private fun onError(throwable: Throwable) =
+        _viewStateMutableLiveData.postValue(ViewState.Error(throwable))
 
 }
