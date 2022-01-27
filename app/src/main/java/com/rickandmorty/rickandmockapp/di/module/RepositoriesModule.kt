@@ -4,10 +4,12 @@ import com.rickandmorty.rickandmockapp.data.repository.DefaultCharactersReposito
 import com.rickandmorty.rickandmockapp.domain.characters.CharactersRepository
 import dagger.Binds
 import dagger.Module
+import javax.inject.Singleton
 
 @Module
 abstract class RepositoriesModule {
 
+    @Singleton
     @Binds
     abstract fun bindsCharactersRepository(
         defaultCharactersRepository: DefaultCharactersRepository

@@ -5,18 +5,18 @@ import com.rickandmorty.rickandmockapp.data.datasource.CharactersDataSource
 import com.rickandmorty.rickandmockapp.utils.TIMEOUT_SECONDS
 import dagger.Module
 import dagger.Provides
-import dagger.Reusable
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
+    @Singleton
     @Provides
-    @Reusable
     internal fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient = OkHttpClient()
@@ -26,8 +26,8 @@ class NetworkModule {
         .readTimeout(TIMEOUT_SECONDS, TimeUnit.SECONDS)
         .build()
 
+    @Singleton
     @Provides
-    @Reusable
     internal fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -35,8 +35,8 @@ class NetworkModule {
         return interceptor
     }
 
+    @Singleton
     @Provides
-    @Reusable
     internal fun provideBaseRetrofit(okHttpClient: OkHttpClient): Retrofit = Retrofit
         .Builder()
         .addConverterFactory(GsonConverterFactory.create())
@@ -44,8 +44,8 @@ class NetworkModule {
         .client(okHttpClient)
         .build()
 
+    @Singleton
     @Provides
-    @Reusable
     internal fun provideCharactersAPI(retrofit: Retrofit): CharactersDataSource =
         retrofit.create(CharactersDataSource::class.java)
 
