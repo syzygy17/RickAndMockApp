@@ -2,7 +2,7 @@ buildscript {
     ext {
         kotlin_version = "1.6.10"
         gradle_version = "7.0.4"
-        navigation_component_version = "2.3.5"
+        navigation_component_version = "2.4.1"
         androidx_core_ktx_version = "1.7.0"
         androidx_appcompat_version = "1.4.1"
         androidx_constraint_layout_version = "2.1.3"
